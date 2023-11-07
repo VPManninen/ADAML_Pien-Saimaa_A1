@@ -20,10 +20,10 @@ while currentYear > 2021
         chlorophyll_date = [chlorophyll_date; newData.results(ii).timestamp(1:end-1)];
     end
 
-    currentYear = year(datetime(lastTime));
+    currentYear = year(datetime(lastTime, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss'));
 end
 % Plot
-chlorophyll_date = datetime(chlorophyll_date);
+chlorophyll_date = datetime(chlorophyll_date, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss');
 figure;
 plot(chlorophyll_date,chlorophyll_data);
 ylabel('Lake Chlorophyll')
@@ -45,10 +45,10 @@ while currentYear > 2021
         temperature_date = [temperature_date; newData.results(ii).timestamp(1:end-1)];
     end
 
-    currentYear = year(datetime(lastTime));
+    currentYear = year(datetime(lastTime, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss'));
 end
 % Plot
-temperature_date = datetime(temperature_date);
+temperature_date = datetime(temperature_date, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss');
 figure;
 plot(temperature_date,temperature_data);
 ylabel('Lake Temperature')
@@ -70,10 +70,20 @@ while currentYear > 2021
         turbidity_date = [turbidity_date; newData.results(ii).timestamp(1:end-1)];
     end
 
-    currentYear = year(datetime(lastTime));
+    currentYear = year(datetime(lastTime, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss'));
 end
 % Plot
-turbidity_date = datetime(turbidity_date);
+turbidity_date = datetime(turbidity_date, 'InputFormat', 'yyyy-MM-dd''T''HH:mm:ss');
 figure;
 plot(turbidity_date,turbidity_data);
 ylabel('Lake Turbidity')
+
+data_struct = struct();
+data_struct.chlorophyll_data = chlorophyll_data;
+data_struct.chlorophyll_date = chlorophyll_date;
+data_struct.temperature_data = temperature_data;
+data_struct.temperature_date = temperature_date;
+data_struct.turbidity_data = turbidity_data;
+data_struct.turbidity_date = turbidity_date;
+
+save("data_struct.mat", "data_struct")
