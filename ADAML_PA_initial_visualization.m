@@ -3,6 +3,77 @@ clc; close all; clearvars
 
 load("data_struct.mat", "data_struct")
 
+%% Components:
+
+% Decompose the Chlorophyll data:
+[Chlor_LT, Chlor_ST, Chlor_R] = trenddecomp(data_struct.chlorophyll_data);
+
+% Plots
+figure;
+subplot(3, 1, 1)
+hold on
+plot(Chlor_LT)
+title("Chlorophyll trend component")
+hold off
+
+subplot(3, 1, 2)
+hold on
+plot(Chlor_ST)
+title("Chlorophyll Seasonal component")
+hold off
+
+subplot(3, 1, 3)
+hold on
+plot(Chlor_R)
+title("Chlorophyll Residual component")
+hold off
+
+% Decompose the Temperature data:
+[Temp_LT, Temp_ST, Temp_R] = trenddecomp(data_struct.temperature_data);
+
+% Plots
+figure;
+subplot(3, 1, 1)
+hold on
+plot(Temp_LT)
+title("Temperature trend component")
+hold off
+
+subplot(3, 1, 2)
+hold on
+plot(Temp_ST)
+title("Temperature Seasonal component")
+hold off
+
+subplot(3, 1, 3)
+hold on
+plot(Temp_R)
+title("Temperature Residual component")
+hold off
+
+% Decompose the Turbidity data:
+[Turb_LT, Turb_ST, Turb_R] = trenddecomp(data_struct.turbidity_data);
+
+% Plots
+figure;
+subplot(3, 1, 1)
+hold on
+plot(Turb_LT)
+title("Turbidity trend component")
+hold off
+
+subplot(3, 1, 2)
+hold on
+plot(Turb_ST)
+title("Turbidity Seasonal component")
+hold off
+
+subplot(3, 1, 3)
+hold on
+plot(Turb_R)
+title("Turbidity Residual component")
+hold off
+
 %% Timeseries visualization:
 
 figure;
@@ -181,3 +252,29 @@ hold off
 temp_turb_corr = corr(data_struct.turbidity_data, data_struct.temperature_data)
 chlr_turb_corr = corr(data_struct.turbidity_data, data_struct.chlorophyll_data)
 temp_chlr_corr = corr(data_struct.temperature_data, data_struct.chlorophyll_data)
+
+%% Month distribution plots:
+
+figure;
+hold on
+title("Turbidity values wrt. months")
+xlabel("Turbidity")
+ylabel("Month")
+plot(month(data_struct.turbidity_date), data_struct.turbidity_data, 'r.')
+hold off
+
+figure;
+hold on
+title("Temperature values wrt. months")
+xlabel("Temperature")
+ylabel("Month")
+plot(month(data_struct.temperature_date), data_struct.temperature_data, 'r.')
+hold off
+
+figure;
+hold on
+title("Chlorophyll values wrt. months")
+xlabel("Chlorophyll")
+ylabel("Month")
+plot(month(data_struct.chlorophyll_date), data_struct.chlorophyll_data, 'r.')
+hold off
